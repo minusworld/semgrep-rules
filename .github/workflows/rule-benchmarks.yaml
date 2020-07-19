@@ -2,7 +2,7 @@ name: rule-benchmarks
 
 on:
   schedule:
-  - cron: '*/15 * * * *'
+  - cron: 0 0 * * MON
 
 jobs:
   run_benchmarks:
@@ -12,7 +12,7 @@ jobs:
     - uses: actions/checkout@v2
     - uses: actions/setup-python@v2
       with:
-        python-version: '3.7.7'
+        python-version: 3.7.7
     - name: Install pipenv
       shell: bash
       run: |
@@ -29,7 +29,7 @@ jobs:
     - name: Run benchmarks
       shell: bash
       run: |
-        pipenv run pytest --rule-directory=c --git-repo=https://github.com/zlib-ng/zlib-ng --timeout=60 --benchmark-only --benchmark-min-rounds=2 --benchmark-json=${{ steps.vars.outputs.today }}.json tests/performance/ | tee test-logs.txt
+        pipenv run pytest --timeout=60 --benchmark-only --benchmark-min-rounds=2 --benchmark-json=${{ steps.vars.outputs.today }}.json tests/performance/ | tee test-logs.txt
     - name: Upload text log
       uses: actions/upload-artifact@v1
       if: ${{ always() }}
