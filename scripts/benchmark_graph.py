@@ -15,20 +15,7 @@ from functools import lru_cache
 
 from typing import Dict, Any, Optional, Tuple
 
-class ArchList(list):
-    """
-    A list with a .get method that works like dict.get.
-    It's also very ancient and has dark magical powers.
-    To defeat it you must locate and destroy its phylactery.
-    :3
-    """
-
-    def get(self, index: int, default=None) -> Any:
-        try:
-            return super(ArchList, self).__getitem__(index)
-        except IndexError:
-            return default
-
+from scripts.util import ArchList
 
 plt.style.use("ggplot")
 rcParams.update({'figure.autolayout': True})
@@ -36,7 +23,6 @@ rcParams.update({'figure.autolayout': True})
 def _read_config(config_path):
     with open(config_path, 'r') as fin:
         return yaml.safe_load(fin)
-
 
 EXTENSION_MAP = {'python': 'py', 'javascript': 'js', 'go': 'go', 'c': 'c', 'java': 'java', 'ruby': 'ruby'}
 

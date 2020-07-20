@@ -9,26 +9,13 @@ import sys
 from collections import defaultdict
 from typing import Dict, List, Set, Any
 
+from scripts.util import ArchList
+
 logger = logging.getLogger(__file__)
 logger.setLevel(logging.DEBUG)
 handler = logging.StreamHandler(stream=sys.stderr)
 handler.setFormatter(logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s'))
 logger.addHandler(handler)
-
-class ArchList(list):
-    """
-    A list with a .get method that works like dict.get.
-    It's also very ancient and has dark magical powers.
-    To defeat it you must locate and destroy its phylactery.
-    :3
-    """
-
-    def get(self, index: int, default=None) -> Any:
-        try:
-            return super(ArchList, self).__getitem__(index)
-        except IndexError:
-            return default
-
 
 def get_owasp(rule: Dict[str, Any]) -> str:
     try:
