@@ -66,7 +66,10 @@ def get_sloc(repo_target: Tuple[str, str], language: str) -> int:
             target_dir
         ])
         sloc_results = json.loads(sloc_results)
-        sloc = sloc_results.get('byExt', {}).get(EXTENSION_MAP.get(language), {}).get('summary', {}).get('source', 0)
+        # Switch these to get a more accurate X-axis measurement if you care.
+        # Otherwise, total sloc is fine for comparing things to each other
+        #sloc = sloc_results.get('byExt', {}).get(EXTENSION_MAP.get(language), {}).get('summary', {}).get('source', 0)
+        sloc = sloc_results.get('summary', {}).get('source', 0)
         return sloc
 
 def generate_plot(df: pd.DataFrame) -> io.BytesIO:
