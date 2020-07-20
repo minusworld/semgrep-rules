@@ -9,8 +9,11 @@ pytest = "*"
 semgrep = "*"
 pyyaml = "*"
 pytest-benchmark = "*"
+pandas = "*"
+matplotlib = "*"
 
 [packages]
+metrics = "*"
 
 [requires]
 python_version = "3.7"
