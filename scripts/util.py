@@ -1,3 +1,5 @@
+from typing import Any
+
 class ArchList(list):
     """
     A list with a .get method that works like dict.get.
