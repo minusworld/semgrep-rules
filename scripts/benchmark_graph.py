@@ -63,7 +63,7 @@ def generate_plot(df: pd.DataFrame) -> io.BytesIO:
     ax = df.plot.barh(
         x="benchmark",
         y="sec per sloc",
-        figsize=(16,64),
+        figsize=(16,16),
         title="Semgrep Rules Benchmarks"
     )
     fig = ax.get_figure()
@@ -120,10 +120,13 @@ def tablify_stats_text(config: Dict[str, str], text: str) ->  bytes:
             print(repr(e), line)
             continue
         table.append(
-            (rule_path, language, running_time / sloc)
+            (rule_path, language, running_time / sloc, sloc / running_time)
         )
-    df = pd.DataFrame(table, columns=["benchmark", "language", "sec per sloc"])
+    df = pd.DataFrame(table, columns=["benchmark", "language", "sec per sloc", "sloc per sec"])
     df = df.sort_values(by="sec per sloc")
+    df = df[df["sloc per sec"] < 1000]
+    for row in df.benchmark:
+        print(row)
     return generate_plot(df)
 
 def img_tag(data: bytes) -> str:
